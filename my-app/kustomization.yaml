@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: my-app
+
+resources:
+  # Secrets and ConfigMaps
+  - secrets.yaml
+  - configmaps.yaml
+  # Frontend
+  - frontend-deployment.yaml
+  - frontend-service.yaml
+  - frontend-route.yaml
+  # Backend
+  - backend-deployment.yaml
+  - backend-service.yaml
+  - backend-route.yaml
+  # PostgreSQL
+  - postgresql-statefulset.yaml
+  - postgresql-service.yaml
+  # Redis
+  - redis-deployment.yaml
+  - redis-service.yaml
+  # Ollama
+  - ollama-deployment.yaml
+  - ollama-service.yaml
+  - ollama-pvc.yaml
+
+commonLabels:
+  app.kubernetes.io/name: connections-ai
+  app.kubernetes.io/managed-by: argocd

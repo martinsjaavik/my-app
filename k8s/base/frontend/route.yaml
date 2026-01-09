@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: connections-frontend
+  namespace: connections-ai
+  labels:
+    app: connections-frontend
+spec:
+  host: connections.apps.example.com
+  to:
+    kind: Service
+    name: connections-frontend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

@@ -1,0 +1,20 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: connections-api
+  namespace: connections-ai
+  labels:
+    app: connections-backend
+  annotations:
+    haproxy.router.openshift.io/timeout: 3600s
+spec:
+  host: api.connections.apps.example.com
+  to:
+    kind: Service
+    name: connections-backend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

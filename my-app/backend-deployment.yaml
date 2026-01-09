@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connections-backend
+  namespace: my-app
+  labels:
+    app: connections-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: connections-backend
+  template:
+    metadata:
+      labels:
+        app: connections-backend
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/martinsjaavik/connections-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: connections-secrets
+              key: database_url
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: redis_url
+        - name: OLLAMA_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: ollama_url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: connections-secrets
+              key: jwt_secret
+        - name: PUZZLE_SOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: puzzle_source_url
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
