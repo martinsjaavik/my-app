@@ -4,8 +4,7 @@ kind: Kustomization
 namespace: my-app
 
 resources:
-  # Secrets and ConfigMaps
-  - secrets.yaml
+  # ConfigMaps (secrets created separately - see secrets.yaml.template)
   - configmaps.yaml
   # Frontend
   - frontend-deployment.yaml

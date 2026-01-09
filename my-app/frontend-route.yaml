@@ -6,7 +6,6 @@ metadata:
   labels:
     app: connections-frontend
 spec:
-  host: connections.apps.example.com
   to:
     kind: Service
     name: connections-frontend

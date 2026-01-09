@@ -229,3 +229,7 @@ Thumbs.db
 # Local development
 .env.local
 .env.*.local
+
+# Kubernetes secrets (never commit!)
+my-app/secrets.yaml
+k8s/**/secrets*.yaml

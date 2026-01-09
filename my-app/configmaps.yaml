@@ -4,8 +4,10 @@ metadata:
   name: frontend-config
   namespace: my-app
 data:
-  api_url: "https://api.connections.apps.example.com/api/v1"
-  ws_url: "wss://api.connections.apps.example.com/ws"
+  # UPDATE: Replace with actual backend route URL after deployment
+  # Run: oc get route connections-api -n my-app -o jsonpath='{.spec.host}'
+  api_url: "https://connections-api-my-app.apps.CLUSTER_DOMAIN/api/v1"
+  ws_url: "wss://connections-api-my-app.apps.CLUSTER_DOMAIN/ws"
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -8,7 +8,6 @@ metadata:
   annotations:
     haproxy.router.openshift.io/timeout: 3600s
 spec:
-  host: api.connections.apps.example.com
   to:
     kind: Service
     name: connections-backend
